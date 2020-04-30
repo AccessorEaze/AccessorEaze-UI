@@ -62,7 +62,7 @@ function MainScreen({navigation}) {
     //Touchable opacity was a pain in the ass to fix
     //The background color sets the color for this page only. There is a bug where it doesnt cover the entire back, leaving the bottom exposed.
     <View style={{backgroundColor: '#666666'}}>
-      <StatusBar hidden />
+      <StatusBar hidden={true} />
       <SafeAreaView>
         <SectionGrid
           renderSectionHeader={({section}) => (
