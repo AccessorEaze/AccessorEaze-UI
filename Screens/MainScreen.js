@@ -63,6 +63,7 @@ function MainScreen({navigation}) {
     //The background color sets the color for this page only. There is a bug where it doesnt cover the entire back, leaving the bottom exposed.
     //dsjkfhsdkjfdsfhsdjksdlhkf
     //This is a test for webstorm github control. please work
+      //This is to check if using git commit actually works.
     <View style={{backgroundColor: '#666666'}}>
       <StatusBar hidden={true} />
       <SafeAreaView>
