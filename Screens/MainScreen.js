@@ -61,7 +61,8 @@ function MainScreen({navigation}) {
     // I also changed the screen rotation. The screen does not rotate anymore.
     //Touchable opacity was a pain in the ass to fix
     //The background color sets the color for this page only. There is a bug where it doesnt cover the entire back, leaving the bottom exposed.
-      //dsjkfhsdkjfdsfhsdjksdlhkf
+    //dsjkfhsdkjfdsfhsdjksdlhkf
+    //This is a test for webstorm github control. please work
     <View style={{backgroundColor: '#666666'}}>
       <StatusBar hidden={true} />
       <SafeAreaView>
