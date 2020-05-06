@@ -1,12 +1,12 @@
 // In App.js in a new project
 
 import * as React from 'react';
-import {NavigationContainer} from '@react-navigation/native';
-import {createStackNavigator} from '@react-navigation/stack';
+//import {NavigationContainer} from '@react-navigation/native';
+//import {createStackNavigator} from '@react-navigation/stack';
 import {getModel} from 'react-native-device-info';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {SectionGrid} from 'react-native-super-grid';
-import DetailsScreen from './Results';
+//import DetailsScreen from './Results';
 import {
   SafeAreaView,
   StatusBar,
@@ -18,7 +18,7 @@ import {
   StyleSheet,
 } from 'react-native';
 
-function HomeScreen({navigation}) {
+export function HomeScreen({navigation}) {
   return (
     <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
       <Text>Home Screen</Text>
@@ -32,10 +32,11 @@ function HomeScreen({navigation}) {
 
 //This is where we can hide the screen header in the app. This setting applies globally.
 //https://aboutreact.com/react-native-hide-navigation-bar-and-make-screen-full-screen/
-const Stack = createStackNavigator();
+//const Stack = createStackNavigator();
 
 //This functions as the control room for the app. this also hooks up the navigation container to the displays, which allows them to switch screens. In this example, the stack screen call is the one that puts the data onto the stack, which we can then click to allow the data to be passed through the system.\
 //Following this, it means that we have to put all of the programs information into this class, in order to switch screens.
+/*
 function App() {
   return (
     <NavigationContainer>
@@ -51,8 +52,9 @@ function App() {
     </NavigationContainer>
   );
 }
+*/
 
-function MainScreen({navigation}) {
+export function MainScreen({navigation}) {
   let PhoneModel = getModel();
   let item = Objects;
   return (
@@ -61,9 +63,6 @@ function MainScreen({navigation}) {
     // I also changed the screen rotation. The screen does not rotate anymore.
     //Touchable opacity was a pain in the ass to fix
     //The background color sets the color for this page only. There is a bug where it doesnt cover the entire back, leaving the bottom exposed.
-    //dsjkfhsdkjfdsfhsdjksdlhkf
-    //This is a test for webstorm github control. please work
-      //This is to check if using git commit actually works.
     <View style={{backgroundColor: '#666666'}}>
       <StatusBar hidden={true} />
       <SafeAreaView>
@@ -139,4 +138,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default App;
+//export default App;

@@ -2,7 +2,7 @@ import React from 'react';
 import {FlatList, StyleSheet, Text, View} from 'react-native';
 
 //This is going to be the default app.
-function FlatListBasics() {
+export function DetailsScreen() {
   return (
     <View style={styles.container}>
       <FlatList
@@ -53,4 +53,6 @@ const styles = StyleSheet.create({
     height: 44,
   },
 });
-export default FlatListBasics;
+
+//TODO: This is still here for compatibility for the default call in mainscreen.js it does not need to exist and can be programmed out.
+export default DetailsScreen;
