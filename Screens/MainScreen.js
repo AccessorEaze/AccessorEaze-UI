@@ -57,6 +57,8 @@ function App() {
 export function MainScreen({navigation}) {
   let PhoneModel = getModel();
   let item = Objects;
+  //const selectedProduct = item.find(product => product.id ===)
+
   return (
     // the StatusBar hidden hides the status bar of the system when running, creating a fullscreen application.
     // I have also used scrollview so that if more tiles are added, they can be scrolled forward. The SafeAreaView is used for iOS touch? This is all i can remember off the top of my head.
@@ -80,7 +82,18 @@ export function MainScreen({navigation}) {
             <View>
               <TouchableOpacity
                 style={[styles.itemContainer, {backgroundColor: item.Color}]}
-                onPress={() => navigation.navigate('Details')}>
+                //onPress={() => navigation.navigate('Product List')}>
+                /*onPress={() =>
+                  navigation.navigate({
+                    routeName: 'Product List',
+                    params: {productID: item.id},
+                  })
+                }>*/
+                onPress={() =>
+                  navigation.navigate('Product List', {
+                    productID: item.id,
+                  })
+                }>
                 <Icon
                   style={[styles.iconPos]}
                   name={item.iconName}
@@ -100,14 +113,15 @@ export function MainScreen({navigation}) {
 }
 
 const Objects = [
-  {Title: 'Cases', Color: '#fc223b', iconName: 'glassdoor'},
+  {Title: 'Cases', Color: '#fc223b', iconName: 'glassdoor', id: 1},
   {
     Title: 'Screen Protectors',
     Color: '#3894df',
     iconName: 'cellphone-screenshot',
+    id: 2,
   },
-  {Title: 'Headphones', Color: '#ffb508', iconName: 'headphones'},
-  {Title: 'Other Accessories', Color: '#56b12e', iconName: 'star-face'},
+  {Title: 'Headphones', Color: '#ffb508', iconName: 'headphones', id: 3},
+  {Title: 'Other Accessories', Color: '#56b12e', iconName: 'star-face', id: 4},
 ];
 
 const styles = StyleSheet.create({
