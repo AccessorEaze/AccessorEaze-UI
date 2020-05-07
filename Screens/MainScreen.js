@@ -120,7 +120,7 @@ const Objects = [
     iconName: 'cellphone-screenshot',
     id: 2,
   },
-  {Title: 'Headphones', Color: '#ffb508', iconName: 'headphones', id: 3},
+  {Title: 'Headphones', Color: '#ffb508', iconName: 'headphones', id: 4},
   {Title: 'Other Accessories', Color: '#56b12e', iconName: 'star-face', id: 4},
 ];
 
