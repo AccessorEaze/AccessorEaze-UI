@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import {View, Text, StyleSheet, Image} from 'react-native';
 
 
 /*function ListItem({navigation}) {
@@ -9,7 +9,7 @@ import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 }*/
 
 class Listing {
-    constructor(productId, id, title, price, URL, vendor)
+    constructor(productId, id, title, price, URL, vendor,smlImage)
     {
         this.productId = productId;
         this.id = id;
@@ -18,7 +18,7 @@ class Listing {
         this. URL = URL;
         this.vendor = vendor;
        // this.bigImage = bigImage;
-       // this.smlImage = smlImage;
+       this.smlImage = smlImage;
     }
 }
 

@@ -91,7 +91,7 @@ export function MainScreen({navigation}) {
                 }>*/
                 onPress={() =>
                   navigation.navigate('Product List', {
-                    productID: item.id,
+                    categoryID: item.id,
                   })
                 }>
                 <Icon
