@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, FlatList, TouchableOpacity,Image} from 'react-native';
+import { View, Text, StyleSheet, FlatList, TouchableOpacity,Image, Button} from 'react-native';
 import {DUMMYLIST} from '../data/dummy';
 
 //const ProductListScreen = props => {
@@ -10,13 +10,22 @@ function ProductListScreen({route, navigation}) {
     const {categoryID} = route.params;
     var retrievedListing = [];
     retrievedListing = retrievedListing.concat(DUMMYLIST);
+
+   /* function FilterPrice() {
+        return(
+
+
+        )
+    }*/
   //Returns a FlatList view which uses the data from retrievedListing array. At present it only prints out the productID that is passed through,
   //the title of the listing and the price.
     return (
         <View style={styles.screen}>
 
             <View style={styles.options}>
-
+                <Button title="Filter" onPress ={() => navigation.navigate('Product List', {
+                    filterID: 'priceLow',
+                })}/>
             </View>
 
 
@@ -25,7 +34,9 @@ function ProductListScreen({route, navigation}) {
                 KeyExtractor={item => item.id}
                 renderItem={({item}) => (
 
-                    <TouchableOpacity onPress={() => navigation.navigate('Product Details')}>
+                    <TouchableOpacity onPress={() => navigation.navigate('Product Details', {
+                        itemDetails: item,
+                    })}>
                         <View style={styles.listItem}>
                             <View style={styles.listItemImage}>
                                 <Image
@@ -52,11 +63,11 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        padding: 10
+        padding: 5
     },
     options: {
-        padding: 30,
-      height: 10,
+        padding: 5,
+      height: '10%',
       width: '100%',
         backgroundColor: 'white'
     },

@@ -2,10 +2,12 @@ import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 
 //const ProductDetailsScreen = props => {
-function ProductDetailsScreen({navigation}) {
+function ProductDetailsScreen({route, navigation}) {
+    const {itemDetails} = route.params;
   return (
     <View style={styles.screen}>
       <Text> Product Detials</Text>
+      <Text> {itemDetails.title}</Text>
     </View>
   );
 }
