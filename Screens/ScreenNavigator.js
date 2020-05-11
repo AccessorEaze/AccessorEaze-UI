@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
-import * as details from './Results';
+//import * as details from './Results';
 import * as home from './MainScreen';
 import ProductListScreen from './ProductListScreen';
 import ProductDetailsScreen from './ProductDetails';
@@ -14,11 +14,6 @@ function Navi() {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Main">
-        <Stack.Screen
-          name={'Home'}
-          component={home.HomeScreen}
-          options={{title: 'Bepsis'}}
-        />
         <Stack.Screen name={'Main'} component={home.MainScreen} />
         <Stack.Screen name="Product List" component={ProductListScreen} />
         <Stack.Screen name={'Product Details'} component={ProductDetailsScreen} />

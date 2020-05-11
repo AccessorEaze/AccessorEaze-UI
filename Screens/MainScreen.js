@@ -1,12 +1,9 @@
 // In App.js in a new project
 
 import * as React from 'react';
-//import {NavigationContainer} from '@react-navigation/native';
-//import {createStackNavigator} from '@react-navigation/stack';
 import {getModel} from 'react-native-device-info';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {SectionGrid} from 'react-native-super-grid';
-//import DetailsScreen from './Results';
 import {
   SafeAreaView,
   StatusBar,
@@ -30,34 +27,16 @@ export function HomeScreen({navigation}) {
   );
 }
 
-//This is where we can hide the screen header in the app. This setting applies globally.
-//https://aboutreact.com/react-native-hide-navigation-bar-and-make-screen-full-screen/
-//const Stack = createStackNavigator();
-
-//This functions as the control room for the app. this also hooks up the navigation container to the displays, which allows them to switch screens. In this example, the stack screen call is the one that puts the data onto the stack, which we can then click to allow the data to be passed through the system.\
-//Following this, it means that we have to put all of the programs information into this class, in order to switch screens.
-/*
-function App() {
-  return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="Main">
-        <Stack.Screen
-          name={'Home'}
-          component={HomeScreen}
-          options={{title: 'Bepsis'}}
-        />
-        <Stack.Screen name={'Main'} component={MainScreen} />
-        <Stack.Screen name={'Details'} component={DetailsScreen} />
-      </Stack.Navigator>
-    </NavigationContainer>
-  );
-}
-*/
-
 export function MainScreen({navigation}) {
   let PhoneModel = getModel();
   let item = Objects;
   //const selectedProduct = item.find(product => product.id ===)
+
+  //This allows the model name to be shown at the top of the title screen where "main" used to be.
+  navigation.setOptions({title: PhoneModel});
+
+  //The following is the original code / package that was used to create the initial application user interface
+  //https://github.com/saleel/react-native-super-grid
 
   return (
     // the StatusBar hidden hides the status bar of the system when running, creating a fullscreen application.
@@ -90,9 +69,13 @@ export function MainScreen({navigation}) {
                   })
                 }>*/
                 onPress={() =>
-                  navigation.navigate('Product List', {
-                    categoryID: item.id,
-                  })
+                  navigation.navigate(
+                    'Product List',
+                    {
+                      category: item,
+                    },
+                    navigation.setParams({Title: 'Hi'}),
+                  )
                 }>
                 <Icon
                   style={[styles.iconPos]}
@@ -112,7 +95,7 @@ export function MainScreen({navigation}) {
   );
 }
 
-const Objects = [
+export const Objects = [
   {Title: 'Cases', Color: '#fc223b', iconName: 'glassdoor', id: 1},
   {
     Title: 'Screen Protectors',
@@ -151,5 +134,3 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 });
-
-//export default App;
