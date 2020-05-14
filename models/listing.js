@@ -8,17 +8,17 @@ import {View, Text, StyleSheet, Image} from 'react-native';
 }*/
 
 class Listing {
-  constructor(productId, id, title, price, URL, vendor, smlImage) {
+  constructor(productId, id, type, product, price, URL, vendor, imageSmall) {
     this.productId = productId;
     //Tostring operation on id allows data to be stored as numbers on data/dummy.js, and converted to string when the required list view is called.
     //This is what caused the visualization error. hopefully the data in the future will be stored as a string to prevent this from being an issue.
     this.id = id.toString();
-    this.title = title;
+    this.product = product;
     this.price = price;
     this.URL = URL;
     this.vendor = vendor;
     // this.bigImage = bigImage;
-    this.smlImage = smlImage;
+    this.imageSmall = imageSmall;
   }
 }
 
