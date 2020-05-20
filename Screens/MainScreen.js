@@ -29,8 +29,9 @@ export function HomeScreen({navigation}) {
 
 export function MainScreen({navigation}) {
   let PhoneModel = getModel();
+  let phoneName = 'Galaxy S20 Ultra';
   let item = Objects;
-  //const selectedProduct = item.find(product => product.id ===)
+
 
   //This allows the model name to be shown at the top of the title screen where "main" used to be.
   navigation.setOptions({title: PhoneModel});
@@ -61,18 +62,14 @@ export function MainScreen({navigation}) {
             <View>
               <TouchableOpacity
                 style={[styles.itemContainer, {backgroundColor: item.Color}]}
-                //onPress={() => navigation.navigate('Product List')}>
-                /*onPress={() =>
-                  navigation.navigate({
-                    routeName: 'Product List',
-                    params: {productID: item.id},
-                  })
-                }>*/
+
                 onPress={() =>
                   navigation.navigate(
                     'Product List',
                     {
                       category: item,
+                      getListings: item.URL,
+                      phoneName: phoneName,
                     },
                     navigation.setParams({Title: 'Hi'}),
                   )
@@ -80,7 +77,7 @@ export function MainScreen({navigation}) {
                 <Icon
                   style={[styles.iconPos]}
                   name={item.iconName}
-                  size={(Dimensions.get('window').width - 70) / 2}
+                  size={(Dimensions.get('window').width - 100) / 2}
                   color="#666666"
                 />
                 <Text style={styles.itemTitle}>{item.Title}</Text>
@@ -96,15 +93,34 @@ export function MainScreen({navigation}) {
 }
 
 export const Objects = [
-  {Title: 'Cases', Color: '#fc223b', iconName: 'glassdoor', id: 1},
+  {
+    Title: 'Cases',
+    Color: '#fc223b',
+    iconName: 'glassdoor',
+    id: 1,
+    URL: 'http://au.minescape.me:3000/accessories/search/phone_case/',
+  },
   {
     Title: 'Screen Protectors',
     Color: '#3894df',
     iconName: 'cellphone-screenshot',
     id: 2,
+    URL: 'http://au.minescape.me:3000/accessories/search/screen_protector/',
   },
-  {Title: 'Headphones', Color: '#ffb508', iconName: 'headphones', id: 4},
-  {Title: 'Other Accessories', Color: '#56b12e', iconName: 'star-face', id: 4},
+  {
+    Title: 'Headphones',
+    Color: '#ffb508',
+    iconName: 'headphones',
+    id: 4,
+    URL: 'http://au.minescape.me:3000/accessories/search/headphones',
+  },
+  {
+    Title: 'Other Accessories',
+    Color: '#56b12e',
+    iconName: 'star-face',
+    id: 4,
+    URL: 'http://au.minescape.me:3000/accessories/search/headphones',
+  },
 ];
 
 const styles = StyleSheet.create({
