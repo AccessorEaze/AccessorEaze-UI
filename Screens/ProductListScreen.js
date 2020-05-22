@@ -12,6 +12,7 @@ import {
   Alert,
   Dimensions,
 } from 'react-native';
+import Listing from '../models/listing';
 
 function ProductListScreen({route, navigation, Component}) {
 
@@ -19,26 +20,33 @@ function ProductListScreen({route, navigation, Component}) {
   //Creates an array called retrievedListing and then concats it with another array. May need to change this logic at some point.
   const {category} = route.params;
   const {getListings} = route.params;
-  const {phoneName} = route.params;
+  const {deviceName} = route.params;
   let [retrievedListing, setListing] = useState([]);
-  let [pulledListing, setPulled] = useState([]);
+  let [pulledListing, setPulled] = useState([Listing]);
 
   //The below useEffect function fetches the JSON data from the API and stores it into the pulledListing array. It is set to only fetch the data
   // once per screen render so that the array can be filtered without being reverted back to the original state.
-
+  // It also has a special Samsung check to see if the device name begins with samsung, if it does then it will remove the first 8 characters from the string.
   useEffect(() => {
     let accessoryURL = '';
-    if (category.id === 1 || category.id === 2) {
-      accessoryURL = getListings + phoneName;
-    }
-    else if (category.id === 3 || category.id ==4)
+    let samsungCheck = deviceName.toLowerCase();
+    let name = deviceName;
+    if (samsungCheck.substr(0, samsungCheck.indexOf(" ")) === 'samsung')
     {
-      accessoryURL = getListings;
+      name = samsungCheck.slice(8);
     }
+    if (category.id === 1 || category.id === 2)
+      {
+        accessoryURL = getListings + name;
+      }
+    else if (category.id === 3 || category.id ==4)
+     {
+       accessoryURL = getListings;
+     }
     fetch(accessoryURL)
         .then(response => response.json())
         .then(json => setPulled(json));
-  }, [category.id, getListings, phoneName]);
+  }, [category.id, getListings, deviceName]);
 
   //The listFilterHandler is used to filter the order of the product listings.
   function listFilterHandler(listingsArray) {

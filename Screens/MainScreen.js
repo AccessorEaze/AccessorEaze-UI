@@ -1,6 +1,6 @@
 // In App.js in a new project
 
-import * as React from 'react';
+import React, {useState, useEffect} from 'react';
 import {getModel} from 'react-native-device-info';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {SectionGrid} from 'react-native-super-grid';
@@ -28,13 +28,21 @@ export function HomeScreen({navigation}) {
 }
 
 export function MainScreen({navigation}) {
-  let PhoneModel = getModel();
-  let phoneName = 'Galaxy S20 Ultra';
+  //let PhoneModel = getModel();
+  let PhoneModel = 'VOG-L09';
   let item = Objects;
+  let [phoneDetails, setPhoneDetails] = useState([]);
 
+  //The UseEffect below appends the phone model to the API URL so that it can retrieve the name of the phone and store it in the
+    useEffect(() => {
+
+      fetch('http://au.minescape.me:3000/phones/model/search/'+PhoneModel)
+          .then(response => response.json())
+          .then(json => setPhoneDetails(json));
+    }, []);
 
   //This allows the model name to be shown at the top of the title screen where "main" used to be.
-  navigation.setOptions({title: PhoneModel});
+  navigation.setOptions({title: 'Your phone is a ' + phoneDetails[0].name});
 
   //The following is the original code / package that was used to create the initial application user interface
   //https://github.com/saleel/react-native-super-grid
@@ -69,7 +77,7 @@ export function MainScreen({navigation}) {
                     {
                       category: item,
                       getListings: item.URL,
-                      phoneName: phoneName,
+                      deviceName: phoneDetails[0].name,
                     },
                     navigation.setParams({Title: 'Hi'}),
                   )
@@ -94,7 +102,7 @@ export function MainScreen({navigation}) {
 
 export const Objects = [
   {
-    Title: 'Cases',
+    Title: 'Cases for',
     Color: '#fc223b',
     iconName: 'glassdoor',
     id: 1,
