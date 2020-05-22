@@ -8,12 +8,16 @@ import ProductDetailsScreen from './ProductDetails';
 
 //This is where we can hide the screen header in the app. This setting applies globally.
 //https://aboutreact.com/react-native-hide-navigation-bar-and-make-screen-full-screen/
+
+//replace line from stacknavigator to hide the bar.
+//<Stack.Navigator initialRouteName="Main" headerMode={'none'}>
+
 const Stack = createStackNavigator();
 
 function Navi() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Main">
+      <Stack.Navigator initialRouteName="Main" headerMode={'none'}>
         <Stack.Screen name={'Main'} component={home.MainScreen} />
         <Stack.Screen name="Product List" component={ProductListScreen} />
         <Stack.Screen name={'Product Details'} component={ProductDetailsScreen} />

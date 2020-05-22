@@ -8,10 +8,7 @@ function ProductDetailsScreen({route, navigation}) {
     <View style={styles.screen}>
       <Text> Product Detials</Text>
       <Text> {itemDetails.id}</Text>
-      <Button
-          title={'Go'}
-          onPress={() => Linking.openURL(itemDetails.url) }
-      />
+      <Button title={'Go'} onPress={() => Linking.openURL(itemDetails.url)} />
     </View>
   );
 }
@@ -25,88 +22,3 @@ const styles = StyleSheet.create({
 });
 
 export default ProductDetailsScreen;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
