@@ -1,6 +1,5 @@
 //UseState is not used, so it is commented out
 //import React, {useState} from 'react';
-
 import React, {Component, useState, useEffect} from 'react';
 import {
   View,
@@ -10,43 +9,49 @@ import {
   TouchableOpacity,
   Image,
   Button,
+  Alert,
+  Dimensions,
 } from 'react-native';
-import Modal from 'react-native-modal';
+import Listing from '../models/listing';
 
 function ProductListScreen({route, navigation, Component}) {
+
   //productID is the ID passed through as a parameter when navigating to this screen from the MainScreen.
   //Creates an array called retrievedListing and then concats it with another array. May need to change this logic at some point.
   const {category} = route.params;
   const {getListings} = route.params;
-  const {phoneName} = route.params;
+  const {deviceName} = route.params;
   let [retrievedListing, setListing] = useState([]);
-  let [pulledListing, setPulled] = useState([]);
-
-  const [isModalVisible, setModalVisible] = useState(false);
-
-  function toggleModal() {
-    setModalVisible(!isModalVisible);
-  }
+  let [pulledListing, setPulled] = useState([Listing]);
 
   //The below useEffect function fetches the JSON data from the API and stores it into the pulledListing array. It is set to only fetch the data
   // once per screen render so that the array can be filtered without being reverted back to the original state.
-
+  // It also has a special Samsung check to see if the device name begins with samsung, if it does then it will remove the first 8 characters from the string.
   useEffect(() => {
     let accessoryURL = '';
-    if (category.id === 1 || category.id === 2) {
-      accessoryURL = getListings + phoneName;
-    } else if (category.id === 3 || category.id == 4) {
-      accessoryURL = getListings;
+    let samsungCheck = deviceName.toLowerCase();
+    let name = deviceName;
+    if (samsungCheck.substr(0, samsungCheck.indexOf(" ")) === 'samsung')
+    {
+      name = samsungCheck.slice(8);
     }
+    if (category.id === 1 || category.id === 2)
+      {
+        accessoryURL = getListings + name;
+      }
+    else if (category.id === 3 || category.id ==4)
+     {
+       accessoryURL = getListings;
+     }
     fetch(accessoryURL)
-      .then(response => response.json())
-      .then(json => setPulled(json));
-  }, [category.id, getListings, phoneName]);
+        .then(response => response.json())
+        .then(json => setPulled(json));
+  }, [category.id, getListings, deviceName]);
 
   //The listFilterHandler is used to filter the order of the product listings.
   function listFilterHandler(listingsArray) {
     //setListing(listingsArray.sort((a, b) => a.price < b.price))
-    listingsArray.sort((a, b) => a.price < b.price);
+    listingsArray.sort((a, b) => a.price < b.price)
   }
   /*function filterAlphabetical(pulledArray) {
     setPulled(pulledArray.sort((a, b) => a.releaseYear < b.releaseYear))
@@ -57,17 +62,19 @@ function ProductListScreen({route, navigation, Component}) {
   //The FilterPrice function sorts the array by price ( low to high).
   function FilterPrice(listingsArray) {
     setListing(listingsArray.sort((a, b) => a.price > b.price));
-  }
+    }
 
   //Returns a FlatList view which uses the data from retrievedListing array. At present it only prints out the productID that is passed through,
   //the title of the listing and the price.
   return (
+
     <View style={styles.screen}>
+
       <View style={styles.options}>
         <Button
           title={'Filter ' + category.Title}
-          //onPress={() => FilterPrice(pulledListing)}
-          onPress={() => toggleModal()}
+          onPress={() => FilterPrice(pulledListing)}
+
         />
       </View>
       <FlatList
@@ -103,27 +110,6 @@ function ProductListScreen({route, navigation, Component}) {
           </TouchableOpacity>
         )}
       />
-
-      <Modal
-        isVisible={isModalVisible}
-        onBackdropPress={() => setModalVisible(false)}
-        onBackButtonPress={() => setModalVisible(false)}
-        //useNativeDriver is used for hardware acceleration as well as mitigating modalview screen flicker.
-        useNativeDriver={true}>
-        <View style={styles.modalList}>
-          <Button
-            title="Price"
-            onPress={() => {
-              toggleModal();
-              FilterPrice(pulledListing);
-            }}
-          />
-          <Button title="Hide modal1" onPress={toggleModal} />
-          <Button title="Hide modal2" onPress={toggleModal} />
-          <Button title="Hide modal3" onPress={toggleModal} />
-          <Button title="Hide modal4" onPress={toggleModal} />
-        </View>
-      </Modal>
     </View>
   );
 }
@@ -139,8 +125,7 @@ const styles = StyleSheet.create({
     padding: 5,
     height: '10%',
     width: '100%',
-    //removed colour as it looked funny having a grey background then a white box containing filters.
-    //backgroundColor: 'white',
+    backgroundColor: 'white',
   },
   listItem: {
     flexDirection: 'row',
@@ -175,12 +160,7 @@ const styles = StyleSheet.create({
     //https://stackoverflow.com/questions/29541971/absolute-and-flexbox-in-react-native
     padding: 3,
   },
-  modalList: {
-    flex: 0.4,
-    //Marginbottom adjusts the space between the buttons, as well as moving them in the opposite direction (marginbottom moves them up) remove / comment out to recenter the buttons.
-    //marginBottom: '40%',
-    justifyContent: 'space-between',
-  },
+
 });
 
 export default ProductListScreen;
