@@ -1,6 +1,6 @@
 // In App.js in a new project
 
-import * as React from 'react';
+import React, {useState, useEffect} from 'react';
 import {getModel} from 'react-native-device-info';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {SectionGrid} from 'react-native-super-grid';
@@ -17,82 +17,94 @@ import {
 
 export function HomeScreen({navigation}) {
   return (
-    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-      <Text>Home Screen</Text>
-      <Button
-        title="Go to Details"
-        onPress={() => navigation.navigate('Details')}
-      />
-    </View>
+      <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+        <Text>Home Screen</Text>
+        <Button
+            title="Go to Details"
+            onPress={() => navigation.navigate('Details')}
+        />
+      </View>
   );
 }
 
 export function MainScreen({navigation}) {
-  let PhoneModel = getModel();
-  let phoneName = 'Galaxy S20 Ultra';
+  //let PhoneModel = getModel();
+  let PhoneModel = 'VOG-L09';
   let item = Objects;
+  let [phoneDetails, setPhoneDetails] = useState([]);
+
+  //The UseEffect below appends the phone model to the API URL so that it can retrieve the name of the phone and store it in the
+  useEffect(() => {
+
+    fetch('http://au.minescape.me:3000/phones/model/search/VOG-L09')
+        .then(response => response.json())
+        .then(json => setPhoneDetails(json));
+  }, [PhoneModel]);
+
+
 
   //This allows the model name to be shown at the top of the title screen where "main" used to be.
-  navigation.setOptions({title: PhoneModel});
+  navigation.setOptions({title: 'Your phone is a ' + PhoneModel});
 
   //The following is the original code / package that was used to create the initial application user interface
   //https://github.com/saleel/react-native-super-grid
 
   return (
-    // the StatusBar hidden hides the status bar of the system when running, creating a fullscreen application.
-    // I have also used scrollview so that if more tiles are added, they can be scrolled forward. The SafeAreaView is used for iOS touch? This is all i can remember off the top of my head.
-    // I also changed the screen rotation. The screen does not rotate anymore.
-    //Touchable opacity was a pain in the ass to fix
-    //The background color sets the color for this page only. There is a bug where it doesnt cover the entire back, leaving the bottom exposed.
-    <View style={{backgroundColor: '#666666'}}>
-      <StatusBar hidden={true} />
-      <SafeAreaView>
-        <SectionGrid
-          renderSectionHeader={({section}) => (
-            <Text style={styles.sectionHeader}>{section.title}</Text>
-          )}
-          sections={[
-            {
-              title: <Text>Your phone model is {PhoneModel}</Text>,
-              data: item,
-            },
-          ]}
-          renderItem={({item}) => (
-            <View>
-              <TouchableOpacity
-                style={[styles.itemContainer, {backgroundColor: item.Color}]}
-                onPress={() =>
-                  navigation.navigate(
-                    'Product List',
-                    {
-                      category: item,
-                      getListings: item.URL,
-                      phoneName: phoneName,
-                    },
-                    navigation.setParams({Title: 'Hi'}),
-                  )
-                }>
-                <Icon
-                  style={[styles.iconPos]}
-                  name={item.iconName}
-                  size={styles.iconPos.width}
-                  color="#666666"
-                />
-                <Text style={styles.itemTitle}>{item.Title}</Text>
-              </TouchableOpacity>
-            </View>
-          )}
-          //This is so the main screen doesnt have scroll capability. This is a design choice as there is only 4 options, so scrolling is not necessary.
-          //scrollEnabled={false}
-        />
-      </SafeAreaView>
-    </View>
+      // the StatusBar hidden hides the status bar of the system when running, creating a fullscreen application.
+      // I have also used scrollview so that if more tiles are added, they can be scrolled forward. The SafeAreaView is used for iOS touch? This is all i can remember off the top of my head.
+      // I also changed the screen rotation. The screen does not rotate anymore.
+      //Touchable opacity was a pain in the ass to fix
+      //The background color sets the color for this page only. There is a bug where it doesnt cover the entire back, leaving the bottom exposed.
+      <View style={{backgroundColor: '#666666'}}>
+        <StatusBar hidden={true} />
+        <SafeAreaView>
+          <SectionGrid
+              renderSectionHeader={({section}) => (
+                  <Text style={styles.sectionHeader}>{section.title}</Text>
+              )}
+              sections={[
+                {
+                  title: <Text>Your phone model is {PhoneModel}</Text>,
+                  data: item,
+                },
+              ]}
+              renderItem={({item}) => (
+                  <View>
+                    <TouchableOpacity
+                        style={[styles.itemContainer, {backgroundColor: item.Color}]}
+
+                        onPress={() =>
+                            navigation.navigate(
+                                'Product List',
+                                {
+                                  category: item,
+                                  getListings: item.URL,
+                                  deviceName: phoneDetails[0].name,
+                                },
+                                navigation.setParams({Title: 'Hi'}),
+                            )
+                        }>
+                      <Icon
+                          style={[styles.iconPos]}
+                          name={item.iconName}
+                          size={(Dimensions.get('window').width - 100) / 2}
+                          color="#666666"
+                      />
+                      <Text style={styles.itemTitle}>{item.Title}</Text>
+                    </TouchableOpacity>
+                  </View>
+              )}
+              //This is so the main screen doesnt have scroll capability. This is a design choice as there is only 4 options, so scrolling is not necessary.
+              //scrollEnabled={false}
+          />
+        </SafeAreaView>
+      </View>
   );
 }
 
 export const Objects = [
   {
-    Title: 'Cases',
+    Title: 'Cases for',
     Color: '#fc223b',
     iconName: 'glassdoor',
     id: 1,
@@ -127,7 +139,6 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     padding: 10,
     //This adjusts the physical length / height of the tiles that are displayed.
-    //Old height, use if new height functions are broken
     height: (Dimensions.get('window').height - 60) / 2,
   },
   itemTitle: {
@@ -147,6 +158,5 @@ const styles = StyleSheet.create({
   //This puts the icons at the top of the container.
   iconPos: {
     flex: 1,
-    width: (Dimensions.get('window').width - 70) / 2,
   },
 });
