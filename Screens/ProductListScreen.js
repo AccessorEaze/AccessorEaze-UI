@@ -13,9 +13,9 @@ import {
   Dimensions,
 } from 'react-native';
 import Listing from '../models/listing';
+import Modal from 'react-native-modal';
 
 function ProductListScreen({route, navigation, Component}) {
-
   //productID is the ID passed through as a parameter when navigating to this screen from the MainScreen.
   //Creates an array called retrievedListing and then concats it with another array. May need to change this logic at some point.
   const {category} = route.params;
@@ -26,32 +26,28 @@ function ProductListScreen({route, navigation, Component}) {
 
   //The below useEffect function fetches the JSON data from the API and stores it into the pulledListing array. It is set to only fetch the data
   // once per screen render so that the array can be filtered without being reverted back to the original state.
-  // It also has a special Samsung check to see if the device name begins with samsung, if it does then it will remove the first 8 characters from the string.
+  // It also has a special Samsung check to see if the device name begins with Samsung, if it does then it will remove the first 8 characters from the string.
   useEffect(() => {
     let accessoryURL = '';
     let samsungCheck = deviceName.toLowerCase();
     let name = deviceName;
-    if (samsungCheck.substr(0, samsungCheck.indexOf(" ")) === 'samsung')
-    {
+    if (samsungCheck.substr(0, samsungCheck.indexOf(' ')) === 'samsung') {
       name = samsungCheck.slice(8);
     }
-    if (category.id === 1 || category.id === 2)
-      {
-        accessoryURL = getListings + name;
-      }
-    else if (category.id === 3 || category.id ==4)
-     {
-       accessoryURL = getListings;
-     }
+    if (category.id === 1 || category.id === 2) {
+      accessoryURL = getListings + name;
+    } else if (category.id === 3 || category.id == 4) {
+      accessoryURL = getListings;
+    }
     fetch(accessoryURL)
-        .then(response => response.json())
-        .then(json => setPulled(json));
+      .then(response => response.json())
+      .then(json => setPulled(json));
   }, [category.id, getListings, deviceName]);
 
   //The listFilterHandler is used to filter the order of the product listings.
   function listFilterHandler(listingsArray) {
     //setListing(listingsArray.sort((a, b) => a.price < b.price))
-    listingsArray.sort((a, b) => a.price < b.price)
+    listingsArray.sort((a, b) => a.price < b.price);
   }
   /*function filterAlphabetical(pulledArray) {
     setPulled(pulledArray.sort((a, b) => a.releaseYear < b.releaseYear))
@@ -59,22 +55,27 @@ function ProductListScreen({route, navigation, Component}) {
 
   //This changes the header label. change this to hi to see what is updated.
   navigation.setOptions({title: category.Title});
-  //The FilterPrice function sorts the array by price ( low to high).
+  //The FilterPrice function sorts the array by price (low to high).
   function FilterPrice(listingsArray) {
     setListing(listingsArray.sort((a, b) => a.price > b.price));
-    }
+  }
+
+  //This allows the modal view.
+  const [ModalVisible, setModalVisible] = useState(false);
+
+  const toggle = () => {
+    setModalVisible(!ModalVisible);
+  };
 
   //Returns a FlatList view which uses the data from retrievedListing array. At present it only prints out the productID that is passed through,
   //the title of the listing and the price.
   return (
-
     <View style={styles.screen}>
-
       <View style={styles.options}>
         <Button
-          title={'Filter ' + category.Title}
-          onPress={() => FilterPrice(pulledListing)}
-
+          title={'Filter ' + category.Title + ' by:'}
+          //onPress={() => FilterPrice(pulledListing)}
+          onPress={() => toggle()}
         />
       </View>
       <FlatList
@@ -100,7 +101,7 @@ function ProductListScreen({route, navigation, Component}) {
               <View style={styles.listItemName}>
                 <Text>
                   {' '}
-                  {item.product} : PRICE: {item.price}
+                  {item.product}
                 </Text>
               </View>
               <View style={styles.listPrice}>
@@ -110,6 +111,26 @@ function ProductListScreen({route, navigation, Component}) {
           </TouchableOpacity>
         )}
       />
+
+      <Modal
+        isVisible={ModalVisible}
+        onBackdropPress={() => setModalVisible(false)}
+        onBackButtonPress={() => setModalVisible(false)}
+        useNativeDriver={true}>
+        <View style={styles.modalViewStyle}>
+          <Button
+            title="Price"
+            onPress={() => {
+              toggle();
+              FilterPrice(pulledListing);
+            }}
+          />
+          <Button title="Hide modal1" onPress={toggle} />
+          <Button title="Hide modal2" onPress={toggle} />
+          <Button title="Hide modal3" onPress={toggle} />
+          <Button title="Hide modal4" onPress={toggle} />
+        </View>
+      </Modal>
     </View>
   );
 }
@@ -125,7 +146,8 @@ const styles = StyleSheet.create({
     padding: 5,
     height: '10%',
     width: '100%',
-    backgroundColor: 'white',
+    //Odd look with the box only being white
+    //backgroundColor: 'white',
   },
   listItem: {
     flexDirection: 'row',
@@ -134,6 +156,8 @@ const styles = StyleSheet.create({
     //       backGround: '#ccc',
     borderColor: 'black',
     borderWidth: 1,
+    //This is to round out edges of the container.
+    borderRadius: 5,
   },
   listItemImage: {
     width: '20%',
@@ -160,7 +184,11 @@ const styles = StyleSheet.create({
     //https://stackoverflow.com/questions/29541971/absolute-and-flexbox-in-react-native
     padding: 3,
   },
-
+  //Style view for modal
+  modalViewStyle: {
+    flex: 0.4,
+    justifyContent: 'space-between',
+  },
 });
 
 export default ProductListScreen;
