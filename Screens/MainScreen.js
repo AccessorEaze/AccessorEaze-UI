@@ -38,8 +38,7 @@ export function MainScreen({navigation}) {
 
   //The UseEffect below appends the phone model to the API URL so that it can retrieve the name of the phone and store it in the
   useEffect(() => {
-    //fetch('http://au.minescape.me:3000/phones/model/search/VOG-L09')
-    fetch('http://au.minescape.me:3000/phones/model/search/H3113')
+    fetch('http://au.minescape.me:3000/phones/model/search/'+PhoneModel)
       .then(response => response.json())
       .then(json => setPhoneDetails(json));
   }, [PhoneModel]);

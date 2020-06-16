@@ -15,9 +15,11 @@ class Listing {
     product,
     price,
     URL,
-    vendor,
     imageSmall,
     imageBig,
+    vendor,
+    ratings,
+    extra,
   ) {
     this.productId = productId;
     //Tostring operation on id allows data to be stored as numbers on data/dummy.js, and converted to string when the required list view is called.
@@ -26,12 +28,12 @@ class Listing {
     this.product = product;
     this.price = price;
     this.URL = URL;
-    this.vendor = vendor;
-    // this.bigImage = bigImage;
-    //used for productDetails.js
     this.imageBig = imageBig;
     //used for thumbnail icons is ProductListScreen.js
     this.imageSmall = imageSmall;
+    this.vendor = vendor;
+    this.ratings = ratings;
+
   }
 }
 

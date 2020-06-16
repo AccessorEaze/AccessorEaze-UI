@@ -14,6 +14,15 @@ import {
 } from 'react-native';
 import Listing from '../models/listing';
 import Modal from 'react-native-modal';
+import {DUMMYLIST} from '../data/dummy';
+
+export function filterVendor(listingsArray, vendorName) {
+  let sorted = listingsArray.filter(function(obj) {
+    return obj.vendor === vendorName;
+  });
+
+  return sorted;
+}
 
 function ProductListScreen({route, navigation, Component}) {
   //productID is the ID passed through as a parameter when navigating to this screen from the MainScreen.
@@ -21,8 +30,9 @@ function ProductListScreen({route, navigation, Component}) {
   const {category} = route.params;
   const {getListings} = route.params;
   const {deviceName} = route.params;
-  let [retrievedListing, setListing] = useState([]);
+  let retrievedListing = DUMMYLIST;
   let [pulledListing, setPulled] = useState([Listing]);
+  let [dummylist, setIt] = useState(DUMMYLIST);
 
   //The below useEffect function fetches the JSON data from the API and stores it into the pulledListing array. It is set to only fetch the data
   // once per screen render so that the array can be filtered without being reverted back to the original state.
@@ -30,7 +40,7 @@ function ProductListScreen({route, navigation, Component}) {
   useEffect(() => {
     let accessoryURL = '';
     let samsungCheck = deviceName.toLowerCase();
-    let name = deviceName;
+    let name = deviceName.replace(/\s+/g, '');
     if (samsungCheck.substr(0, samsungCheck.indexOf(' ')) === 'samsung') {
       name = samsungCheck.slice(8);
     }
@@ -49,15 +59,25 @@ function ProductListScreen({route, navigation, Component}) {
     //setListing(listingsArray.sort((a, b) => a.price < b.price))
     listingsArray.sort((a, b) => a.price < b.price);
   }
-  /*function filterAlphabetical(pulledArray) {
-    setPulled(pulledArray.sort((a, b) => a.releaseYear < b.releaseYear))
-  }*/
+
 
   //This changes the header label. change this to hi to see what is updated.
   navigation.setOptions({title: category.Title});
   //The FilterPrice function sorts the array by price (low to high).
   function FilterPrice(listingsArray) {
-    setListing(listingsArray.sort((a, b) => a.price > b.price));
+    setPulled(listingsArray.sort((a, b) => a.price > b.price));
+  }
+
+  function filterVendor(listingsArray, vendorName) {
+    let sorted = listingsArray.filter(function(obj) {
+      return obj.vendor === vendorName;
+    });
+
+    setIt(sorted);
+  }
+
+  function filterRatings(listingsArray) {
+    setPulled(listingsArray.sort((a, b) => a.ratings < b.ratings));
   }
 
   //This allows the modal view.
@@ -74,12 +94,11 @@ function ProductListScreen({route, navigation, Component}) {
       <View style={styles.options}>
         <Button
           title={'Filter ' + category.Title + ' by:'}
-          //onPress={() => FilterPrice(pulledListing)}
           onPress={() => toggle()}
         />
       </View>
       <FlatList
-        data={pulledListing}
+        data={dummylist}
         KeyExtractor={item => item.id.toString()}
         renderItem={({item}) => (
           <TouchableOpacity
@@ -101,7 +120,7 @@ function ProductListScreen({route, navigation, Component}) {
               <View style={styles.listItemName}>
                 <Text>
                   {' '}
-                  {item.product}
+                  {item.product} + {item.ratings} + {item.vendor}
                 </Text>
               </View>
               <View style={styles.listPrice}>
@@ -119,16 +138,30 @@ function ProductListScreen({route, navigation, Component}) {
         useNativeDriver={true}>
         <View style={styles.modalViewStyle}>
           <Button
-            title="Price"
+            title="Price: Low-High"
             onPress={() => {
               toggle();
-              FilterPrice(pulledListing);
+              FilterPrice(dummylist);
             }}
           />
-          <Button title="Hide modal1" onPress={toggle} />
-          <Button title="Hide modal2" onPress={toggle} />
-          <Button title="Hide modal3" onPress={toggle} />
-          <Button title="Hide modal4" onPress={toggle} />
+          <Button
+              title="Rating"
+              onPress={() => {
+                toggle();
+                filterRatings(dummylist);
+              }} />
+          <Button
+              title="Vendor: PB Tech"
+              onPress={() => {
+                toggle();
+                filterVendor(dummylist,'PBtech');
+              }} />
+          <Button title="Vendor: JB Hi-Fi" onPress={toggle} />
+          <Button title="Clear Filters"
+                  onPress={() => {
+                  toggle();
+                  setIt(retrievedListing);
+                  }}/>
         </View>
       </Modal>
     </View>

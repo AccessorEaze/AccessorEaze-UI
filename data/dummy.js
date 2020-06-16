@@ -10,6 +10,9 @@ export const DUMMYLIST = [
     20,
     'www.pbtech.co.nz',
     'https://www.pbtech.co.nz/thumbs/M/P/MPPSGP00716.jpg.large.jpg?h=1005678348',
+      'https://www.pbtech.co.nz/thumbs/M/P/MPPSGP00716.jpg.large.jpg?h=1005678348',
+      'JB-HIFI',
+    7,
   ),
   new Listing(
     2,
@@ -46,6 +49,9 @@ export const DUMMYLIST = [
     2,
     'www.pbtech.co.nz',
     'https://www.pbtech.co.nz/thumbs/M/P/MPPSGP00716.jpg.large.jpg?h=1005678348',
+      'https://www.pbtech.co.nz/thumbs/M/P/MPPSGP00716.jpg.large.jpg?h=1005678348',
+      'PBtech',
+      8,
   ),
   new Listing(
     6,
@@ -55,6 +61,9 @@ export const DUMMYLIST = [
     84,
     'www.pbtech.co.nz',
     'https://www.pbtech.co.nz/thumbs/M/P/MPPSGP00716.jpg.large.jpg?h=1005678348',
+      'https://www.pbtech.co.nz/thumbs/M/P/MPPSGP00716.jpg.large.jpg?h=1005678348',
+      'PBtech',
+      3,
   ),
   new Listing(
     7,
@@ -64,6 +73,10 @@ export const DUMMYLIST = [
     95,
     'www.pbtech.co.nz',
     'https://www.pbtech.co.nz/thumbs/M/P/MPPSGP00716.jpg.large.jpg?h=1005678348',
+      'https://www.pbtech.co.nz/thumbs/M/P/MPPSGP00716.jpg.large.jpg?h=1005678348',
+      'JB-HIFI',
+      2,
+
   ),
   new Listing(
     8,
@@ -72,6 +85,10 @@ export const DUMMYLIST = [
     40.95,
     18,
     'www.pbtech.co.nz',
-    'https://www.pbtech.co.nz/thumbs/M/P/MPPSGP00716.jpg.large.jpg?h=1005678348',
+      'https://www.pbtech.co.nz/thumbs/M/P/MPPSGP00716.jpg.large.jpg?h=1005678348',
+      'https://www.pbtech.co.nz/thumbs/M/P/MPPSGP00716.jpg.large.jpg?h=1005678348',
+      'Pbtech',
+      9,
+
   ),
 ];
