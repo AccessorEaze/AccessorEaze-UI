@@ -129,7 +129,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.accessease_test_2"
+        applicationId "com.accessoreaze"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
@@ -163,6 +163,14 @@ android {
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
     }
+    buildscript {
+        ext {
+                buildToolsVersion = "28.0.3"
+                minSdkVersion = 16
+                compileSdkVersion = 29 // change from 28 -> 29
+                targetSdkVersion = 29 // change from 28 -> 29
+            }
+    }
 
     packagingOptions {
         pickFirst "lib/armeabi-v7a/libc++_shared.so"
@@ -185,9 +193,14 @@ android {
 
         }
     }
+
+
 }
 
 dependencies {
+    //This is for storage
+    implementation project(':@react-native-community_async-storage')
+    //Above for storage
     implementation fileTree(dir: "libs", include: ["*.jar"])
     //noinspection GradleDynamicVersion
     implementation "com.facebook.react:react-native:+"  // From node_modules

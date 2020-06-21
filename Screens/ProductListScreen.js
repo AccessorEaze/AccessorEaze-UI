@@ -1,6 +1,7 @@
 //UseState is not used, so it is commented out
 //import React, {useState} from 'react';
 import React, {Component, useState, useEffect} from 'react';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {
   View,
   Text,
@@ -15,9 +16,10 @@ import {
 import Listing from '../models/listing';
 import Modal from 'react-native-modal';
 import {DUMMYLIST} from '../data/dummy';
+import AsyncStorage from '@react-native-community/async-storage';
 
 export function filterVendor(listingsArray, vendorName) {
-  let sorted = listingsArray.filter(function(obj) {
+  let sorted = listingsArray.filter(function (obj) {
     return obj.vendor === vendorName;
   });
 
@@ -30,6 +32,7 @@ function ProductListScreen({route, navigation, Component}) {
   const {category} = route.params;
   const {getListings} = route.params;
   const {deviceName} = route.params;
+  const {error} = route.params;
   let retrievedListing = DUMMYLIST;
   let [pulledListing, setPulled] = useState([Listing]);
   let [dummylist, setIt] = useState(DUMMYLIST);
@@ -38,28 +41,29 @@ function ProductListScreen({route, navigation, Component}) {
   // once per screen render so that the array can be filtered without being reverted back to the original state.
   // It also has a special Samsung check to see if the device name begins with Samsung, if it does then it will remove the first 8 characters from the string.
   useEffect(() => {
-    let accessoryURL = '';
-    let samsungCheck = deviceName.toLowerCase();
-    let name = deviceName.replace(/\s+/g, '');
-    if (samsungCheck.substr(0, samsungCheck.indexOf(' ')) === 'samsung') {
-      name = samsungCheck.slice(8);
-    }
-    if (category.id === 1 || category.id === 2) {
-      accessoryURL = getListings + name;
-    } else if (category.id === 3 || category.id == 4) {
-      accessoryURL = getListings;
+    let accessoryURL = getListings;
+    if (error == null) {
+      let samsungCheck = deviceName.toLowerCase();
+      let name = deviceName.replace(/\s+/g, '');
+      if (samsungCheck.substr(0, samsungCheck.indexOf(' ')) === 'samsung') {
+        name = samsungCheck.slice(8);
+      }
+      if (category.id === 1 || category.id === 2) {
+        accessoryURL = getListings + name;
+      } /*else if (category.id === 3 || category.id == 4) {
+        accessoryURL = getListings;
+      }*/
     }
     fetch(accessoryURL)
-      .then(response => response.json())
-      .then(json => setPulled(json));
-  }, [category.id, getListings, deviceName]);
+      .then((response) => response.json())
+      .then((json) => setPulled(json));
+  }, [category.id, getListings, deviceName, error]);
 
   //The listFilterHandler is used to filter the order of the product listings.
   function listFilterHandler(listingsArray) {
     //setListing(listingsArray.sort((a, b) => a.price < b.price))
     listingsArray.sort((a, b) => a.price < b.price);
   }
-
 
   //This changes the header label. change this to hi to see what is updated.
   navigation.setOptions({title: category.Title});
@@ -69,7 +73,7 @@ function ProductListScreen({route, navigation, Component}) {
   }
 
   function filterVendor(listingsArray, vendorName) {
-    let sorted = listingsArray.filter(function(obj) {
+    let sorted = listingsArray.filter(function (obj) {
       return obj.vendor === vendorName;
     });
 
@@ -99,7 +103,7 @@ function ProductListScreen({route, navigation, Component}) {
       </View>
       <FlatList
         data={dummylist}
-        KeyExtractor={item => item.id.toString()}
+        KeyExtractor={(item) => item.id.toString()}
         renderItem={({item}) => (
           <TouchableOpacity
             onPress={() =>
@@ -117,15 +121,38 @@ function ProductListScreen({route, navigation, Component}) {
                   resizeMode={'cover'}
                 />
               </View>
-              <View style={styles.listItemName}>
+              {/*              <View style={styles.listItemName}>
                 <Text>
                   {' '}
-                  {item.product} + {item.ratings} + {item.vendor}
+                  {item.type}
+                  {item.product} + {item.ratings} + {item.vendor} + {item.URL} + {item.type}
                 </Text>
               </View>
+              <View style={styles.listVendor}>
+                <Text>From: {item.vendor}</Text>
+              </View>*/}
               <View style={styles.listPrice}>
                 <Text>${item.price}</Text>
               </View>
+              {/*I want to create a heart button that can be pressed to add to favourite
+                            <TouchableHighlight
+                onPress={() => {
+                  alert('heart pressed');
+                }}>
+                <Icon
+                  style={[styles.iconPos]}
+                  name={'heart-outline'}
+                  size={40}
+                  color="#000000"
+                />
+              </TouchableHighlight>*/}
+              <Button
+                title={'Favorite'}
+                style={[styles.favPos]}
+                onPress={() => {
+                  addFav(AsyncStorage, item).then('Saved');
+                }}
+              />
             </View>
           </TouchableOpacity>
         )}
@@ -145,27 +172,53 @@ function ProductListScreen({route, navigation, Component}) {
             }}
           />
           <Button
-              title="Rating"
-              onPress={() => {
-                toggle();
-                filterRatings(dummylist);
-              }} />
+            title="Rating"
+            onPress={() => {
+              toggle();
+              filterRatings(dummylist);
+            }}
+          />
           <Button
-              title="Vendor: PB Tech"
-              onPress={() => {
-                toggle();
-                filterVendor(dummylist,'PBtech');
-              }} />
+            title="Vendor: PB Tech"
+            onPress={() => {
+              toggle();
+              filterVendor(dummylist, 'PBtech');
+            }}
+          />
           <Button title="Vendor: JB Hi-Fi" onPress={toggle} />
-          <Button title="Clear Filters"
-                  onPress={() => {
-                  toggle();
-                  setIt(retrievedListing);
-                  }}/>
+          <Button
+            title="Clear Filters"
+            onPress={() => {
+              toggle();
+              setIt(retrievedListing);
+            }}
+          />
         </View>
       </Modal>
     </View>
   );
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//https://medium.com/@jeevium/if-you-are-using-asyncstorage-react-native-api-you-need-these-2-permissions-7960b2e09022
+//Annoyingly, extra permissions are required to store items.
+async function addFav({AsyncStorage}, {item}) {
+  const store_key = 2;
+  try {
+    await AsyncStorage.setItem(store_key, item);
+  } catch (e) {
+    alert('Failed to save');
+  }
+}
+
+async function getFav({AsyncStorage}) {
+  try {
+    const keys = await AsyncStorage.getAllKeys();
+    const items = await AsyncStorage.multiGet(keys);
+    return items;
+  } catch (e) {
+    alert('No favourites list found on your phone');
+  }
 }
 
 const styles = StyleSheet.create({
@@ -174,6 +227,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: 5,
+    backgroundColor: '#666666',
   },
   options: {
     padding: 5,
@@ -205,7 +259,7 @@ const styles = StyleSheet.create({
   },
   listItemName: {
     width: '80%',
-    height: '50%',
+    height: 70,
     overflow: 'hidden',
   },
   listPrice: {
@@ -217,10 +271,28 @@ const styles = StyleSheet.create({
     //https://stackoverflow.com/questions/29541971/absolute-and-flexbox-in-react-native
     padding: 3,
   },
+  listVendor: {
+    position: 'absolute',
+    //This aligns the block to the left. can also be used for padding
+    left: '25%',
+    //So it doesnt touch the boarder
+    alignSelf: 'flex-end',
+    //https://stackoverflow.com/questions/29541971/absolute-and-flexbox-in-react-native
+    padding: 3,
+  },
   //Style view for modal
   modalViewStyle: {
     flex: 0.4,
     justifyContent: 'space-between',
+  },
+  favPos: {
+    //flex: 0.5,
+    //position: 'absolute',
+    //alignSelf: 'flex-end',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    height: 10,
+    //left: 0,
   },
 });
 

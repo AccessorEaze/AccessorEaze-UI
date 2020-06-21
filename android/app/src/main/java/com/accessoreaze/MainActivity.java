@@ -1,4 +1,4 @@
-package com.accessease_test_2;
+package com.accessoreaze;
 
 import com.facebook.react.ReactActivity;
 
@@ -10,6 +10,6 @@ public class MainActivity extends ReactActivity {
    */
   @Override
   protected String getMainComponentName() {
-    return "accessease_test_2";
+    return "AccessorEaze";
   }
 }

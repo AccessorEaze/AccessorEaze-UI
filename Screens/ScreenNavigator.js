@@ -16,7 +16,7 @@ function Navi() {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Main" headerMode={'none'}>
-        <Stack.Screen name={'Main'} component= {home.MainScreen} />
+        <Stack.Screen name={'Main'} component={home.MainScreen} />
         <Stack.Screen name="Product List" component={ProductListScreen} />
         <Stack.Screen name={'Product Details'} component={ProductDetailsScreen} />
       </Stack.Navigator>
