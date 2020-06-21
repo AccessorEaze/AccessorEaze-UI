@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "2D02E47A1E0B4A5D006451C7"
-               BuildableName = "accessease_test_2-tvOS.app"
-               BlueprintName = "accessease_test_2-tvOS"
-               ReferencedContainer = "container:accessease_test_2.xcodeproj">
+               BuildableName = "AccessorEaze-tvOS.app"
+               BlueprintName = "AccessorEaze-tvOS"
+               ReferencedContainer = "container:AccessorEaze.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "2D02E48F1E0B4A5D006451C7"
-               BuildableName = "accessease_test_2-tvOSTests.xctest"
-               BlueprintName = "accessease_test_2-tvOSTests"
-               ReferencedContainer = "container:accessease_test_2.xcodeproj">
+               BuildableName = "AccessorEaze-tvOSTests.xctest"
+               BlueprintName = "AccessorEaze-tvOSTests"
+               ReferencedContainer = "container:AccessorEaze.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -55,9 +55,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "2D02E47A1E0B4A5D006451C7"
-            BuildableName = "accessease_test_2-tvOS.app"
-            BlueprintName = "accessease_test_2-tvOS"
-            ReferencedContainer = "container:accessease_test_2.xcodeproj">
+            BuildableName = "AccessorEaze-tvOS.app"
+            BlueprintName = "AccessorEaze-tvOS"
+            ReferencedContainer = "container:AccessorEaze.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -72,9 +72,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "2D02E47A1E0B4A5D006451C7"
-            BuildableName = "accessease_test_2-tvOS.app"
-            BlueprintName = "accessease_test_2-tvOS"
-            ReferencedContainer = "container:accessease_test_2.xcodeproj">
+            BuildableName = "AccessorEaze-tvOS.app"
+            BlueprintName = "AccessorEaze-tvOS"
+            ReferencedContainer = "container:AccessorEaze.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

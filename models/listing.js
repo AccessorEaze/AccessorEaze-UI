@@ -28,15 +28,19 @@ class Listing {
     this.product = product;
     this.price = price;
     this.URL = URL;
-    this.imageBig = imageBig;
+    this.type = type;
     //used for thumbnail icons is ProductListScreen.js
     this.imageSmall = imageSmall;
+    if (imageBig == null) {
+      this.imageBig = imageSmall;
+    } else {
+      this.imageBig = imageBig;
+    }
     this.vendor = vendor;
     this.ratings = ratings;
-
   }
 }
-
+/*
 const styles = StyleSheet.create({
   listItem: {
     padding: 10,
@@ -46,5 +50,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
   },
 });
+*/
 
 export default Listing;

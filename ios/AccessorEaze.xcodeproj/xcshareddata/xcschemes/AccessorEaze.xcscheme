@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-               BuildableName = "accessease_test_2.app"
-               BlueprintName = "accessease_test_2"
-               ReferencedContainer = "container:accessease_test_2.xcodeproj">
+               BuildableName = "AccessorEaze.app"
+               BlueprintName = "AccessorEaze"
+               ReferencedContainer = "container:AccessorEaze.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "00E356ED1AD99517003FC87E"
-               BuildableName = "accessease_test_2Tests.xctest"
-               BlueprintName = "accessease_test_2Tests"
-               ReferencedContainer = "container:accessease_test_2.xcodeproj">
+               BuildableName = "AccessorEazeTests.xctest"
+               BlueprintName = "AccessorEazeTests"
+               ReferencedContainer = "container:AccessorEaze.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -55,9 +55,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "accessease_test_2.app"
-            BlueprintName = "accessease_test_2"
-            ReferencedContainer = "container:accessease_test_2.xcodeproj">
+            BuildableName = "AccessorEaze.app"
+            BlueprintName = "AccessorEaze"
+            ReferencedContainer = "container:AccessorEaze.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -72,9 +72,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "accessease_test_2.app"
-            BlueprintName = "accessease_test_2"
-            ReferencedContainer = "container:accessease_test_2.xcodeproj">
+            BuildableName = "AccessorEaze.app"
+            BlueprintName = "AccessorEaze"
+            ReferencedContainer = "container:AccessorEaze.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

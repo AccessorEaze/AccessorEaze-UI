@@ -7,25 +7,29 @@ import {
   Linking,
   Image,
   Dimensions,
+  ScrollView,
 } from 'react-native';
 
-//const ProductDetailsScreen = props => {
 function ProductDetailsScreen({route, navigation}) {
   const {itemDetails} = route.params;
   return (
     <View style={styles.screen}>
-      <View>
-        <Image style={styles.image} source={{uri: itemDetails.imageBig}} />
-      </View>
-      <Text> {itemDetails.product}</Text>
-      <View>{/* <Text> {itemDetails.id}</Text>*/}</View>
-      <Button title={'Go'} onPress={() => Linking.openURL(itemDetails.url)} />
+      <ScrollView>
+        <View>
+          <Image style={styles.image} source={{uri: itemDetails.imageBig}} />
+        </View>
+        {/*<Text> {itemDetails.product}</Text> This is commented out so the discription is the only thing on the screen instead of a random number which doesnt mean anything for an end user.*/}
+        <View>{<Text> {itemDetails.type}</Text>}</View>
+        {/*The https is added so dummy data isnt affected and can actually open links.*/}
+        <Button title={'Go'} onPress={() => Linking.openURL('https://'+itemDetails.URL).catch(() => alert ('Could not open link.'))} />
+      </ScrollView>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   screen: {
+    backgroundColor: '#666666',
     flex: 1,
     //justifyContent: 'center',
     alignItems: 'center',

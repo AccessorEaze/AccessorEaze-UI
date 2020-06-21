@@ -44,8 +44,8 @@ def flipper_post_install(installer)
   end
 end
 
-target 'accessease_test_2' do
-  # Pods for accessease_test_2
+target 'AccessorEaze' do
+  # Pods for AccessorEaze
   pod 'FBLazyVector', :path => "../node_modules/react-native/Libraries/FBLazyVector"
   pod 'FBReactNativeSpec', :path => "../node_modules/react-native/Libraries/FBReactNativeSpec"
   pod 'RCTRequired', :path => "../node_modules/react-native/Libraries/RCTRequired"
@@ -81,7 +81,9 @@ target 'accessease_test_2' do
 
   pod 'RNDeviceInfo', :path => '../node_modules/react-native-device-info'
 
-  target 'accessease_test_2Tests' do
+  pod 'react-native-webview', :path => '../node_modules/react-native-webview'
+
+  target 'AccessorEazeTests' do
     inherit! :complete
     # Pods for testing
   end
@@ -98,10 +100,10 @@ target 'accessease_test_2' do
   end
 end
 
-target 'accessease_test_2-tvOS' do
-  # Pods for accessease_test_2-tvOS
+target 'AccessorEaze-tvOS' do
+  # Pods for AccessorEaze-tvOS
 
-  target 'accessease_test_2-tvOSTests' do
+  target 'AccessorEaze-tvOSTests' do
     inherit! :search_paths
     # Pods for testing
   end
