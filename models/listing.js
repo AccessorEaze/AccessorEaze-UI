@@ -36,7 +36,11 @@ class Listing {
     } else {
       this.imageBig = imageBig;
     }
-    this.vendor = vendor;
+    if (vendor == null) {
+      this.vendor = 'PBtech';
+    } else {
+      this.vendor = vendor;
+    }
     this.ratings = ratings;
   }
 }

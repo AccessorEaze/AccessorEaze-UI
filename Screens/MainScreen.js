@@ -21,7 +21,8 @@ import {
 import Modal from 'react-native-modal';
 
 export function MainScreen({navigation}) {
-  let PhoneModel = 'VOG-L09';
+  let PhoneModel = null;
+  PhoneModel = getModel();
   const [phoneDetails, setPhoneDetails] = useState([]);
   const [showRegister, setShowRegister] = useState(false);
   const [showLogin, setShowLogin] = useState(false);
@@ -117,26 +118,30 @@ export function MainScreen({navigation}) {
   //https://github.com/saleel/react-native-super-grid
 
   function goto(navigation, item, phoneDetails) {
-    if (item.id == 4) {
-      if (!isLogin) {
-        loginToggle();
-      }
+    if (phoneDetails.content == undefined) {
+      alert('No items available. Please check your internet connection.');
     } else {
-      if (phoneDetails.error == null) {
-        navigation.navigate('Product List', {
-          category: item,
-          getListings: item.URL,
-          deviceName: phoneDetails[0].name,
-        });
+      if (item.id == 4) {
+        if (!isLogin) {
+          loginToggle();
+        }
       } else {
-        alert(
-          'Cannot find your phone model on our servers. Your phone may be too new, not an official model supported by google, or you may be offline. Items shown may not fit your phone.',
-        );
-        navigation.navigate('Product List', {
-          category: item,
-          getListings: item.URL,
-          error: true,
-        });
+        if (phoneDetails.error == null) {
+          navigation.navigate('Product List', {
+            category: item,
+            getListings: item.URL,
+            deviceName: phoneDetails[0].name,
+          });
+        } else {
+          alert(
+            'Cannot find your phone model on our servers. Your phone may be too new, not an official model supported by google, or you may be offline. Items shown may not fit your phone.',
+          );
+          navigation.navigate('Product List', {
+            category: item,
+            getListings: item.URL,
+            error: true,
+          });
+        }
       }
     }
   }
@@ -147,7 +152,12 @@ export function MainScreen({navigation}) {
       //Changed fetch so that it searches the correct phone model.
       //fetch('http://au.minescape.me:3000/phones/model/search/' + PhoneModel)
       .then((response) => response.json())
-      .then((json) => setPhoneDetails(json));
+      .then((json) => setPhoneDetails(json))
+      .catch(() => {
+        alert(
+          'Could not find your phone on the servers. Please check your internet connection.',
+        );
+      });
     //.then(alert(JSON.stringify(phoneDetails)));
   }, [PhoneModel]);
 

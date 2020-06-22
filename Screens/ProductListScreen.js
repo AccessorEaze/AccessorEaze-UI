@@ -121,16 +121,17 @@ function ProductListScreen({route, navigation, Component}) {
                   resizeMode={'cover'}
                 />
               </View>
-              {/*              <View style={styles.listItemName}>
+              <View style={styles.listItemName}>
                 <Text>
                   {' '}
                   {item.type}
-                  {item.product} + {item.ratings} + {item.vendor} + {item.URL} + {item.type}
+                  {/*{item.product} + {item.ratings} + {item.vendor} + {item.URL} +{' '}
+                  {item.type}*/}
                 </Text>
               </View>
               <View style={styles.listVendor}>
                 <Text>From: {item.vendor}</Text>
-              </View>*/}
+              </View>
               <View style={styles.listPrice}>
                 <Text>${item.price}</Text>
               </View>
@@ -146,13 +147,13 @@ function ProductListScreen({route, navigation, Component}) {
                   color="#000000"
                 />
               </TouchableHighlight>*/}
-              <Button
+              {/*              <Button
                 title={'Favorite'}
                 style={[styles.favPos]}
                 onPress={() => {
                   addFav(AsyncStorage, item).then('Saved');
                 }}
-              />
+              />*/}
             </View>
           </TouchableOpacity>
         )}
