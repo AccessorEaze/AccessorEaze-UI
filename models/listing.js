@@ -24,10 +24,12 @@ class Listing {
     this.type = type;
     //used for thumbnail icons is ProductListScreen.js
     this.imageSmall = imageSmall;
-    if (imageBig == null) {
-      this.imageBig = imageSmall;
-    } else {
-      this.imageBig = imageBig;
+    if (this.imageSmall == null || this.imageSmall == undefined) {
+      this.imageSmall = 'https://reactjs.org/logo-og.png';
+    }
+    this.imageBig = imageBig;
+    if (this.imageBig == null || this.imageBig == undefined) {
+      this.imageBig = 'https://reactjs.org/logo-og.png';
     }
     if (vendor == null) {
       this.vendor = 'PBtech';

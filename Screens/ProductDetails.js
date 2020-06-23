@@ -12,6 +12,7 @@ import {
 
 function ProductDetailsScreen({route}) {
   const {itemDetails} = route.params;
+
   return (
     <View style={styles.screen}>
       <ScrollView>
@@ -21,7 +22,14 @@ function ProductDetailsScreen({route}) {
         {/*<Text> {itemDetails.product}</Text> This is commented out so the discription is the only thing on the screen instead of a random number which doesnt mean anything for an end user.*/}
         <View>{<Text> {itemDetails.type}</Text>}</View>
         {/*The https is added so dummy data isnt affected and can actually open links.*/}
-        <Button title={'Go'} onPress={() => Linking.openURL('https://'+itemDetails.URL).catch(() => alert ('Could not open link.'))} />
+        <Button
+          title={'Go'}
+          onPress={() =>
+            Linking.openURL('https://' + itemDetails.URL).catch(() =>
+              alert('Could not open link.'),
+            )
+          }
+        />
       </ScrollView>
     </View>
   );
