@@ -1,4 +1,3 @@
-//import * as home from '../Screens/MainScreen';
 import Listing from '../models/listing';
 
 export const DUMMYLIST = [

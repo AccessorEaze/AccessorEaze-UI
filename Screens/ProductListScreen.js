@@ -1,7 +1,6 @@
 //UseState is not used, so it is commented out
 //import React, {useState} from 'react';
-import React, {Component, useState, useEffect} from 'react';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import React, {useState, useEffect} from 'react';
 import {
   View,
   Text,
@@ -10,13 +9,10 @@ import {
   TouchableOpacity,
   Image,
   Button,
-  Alert,
-  Dimensions,
 } from 'react-native';
 import Listing from '../models/listing';
 import Modal from 'react-native-modal';
 import {DUMMYLIST} from '../data/dummy';
-import AsyncStorage from '@react-native-community/async-storage';
 
 export function filterVendor(listingsArray, vendorName) {
   let sorted = listingsArray.filter(function (obj) {
@@ -26,7 +22,7 @@ export function filterVendor(listingsArray, vendorName) {
   return sorted;
 }
 
-function ProductListScreen({route, navigation, Component}) {
+function ProductListScreen({route, navigation}) {
   //productID is the ID passed through as a parameter when navigating to this screen from the MainScreen.
   //Creates an array called retrievedListing and then concats it with another array. May need to change this logic at some point.
   const {category} = route.params;
@@ -50,13 +46,16 @@ function ProductListScreen({route, navigation, Component}) {
       }
       if (category.id === 1 || category.id === 2) {
         accessoryURL = getListings + name;
-      } /*else if (category.id === 3 || category.id == 4) {
-        accessoryURL = getListings;
-      }*/
+      }
     }
     fetch(accessoryURL)
       .then((response) => response.json())
-      .then((json) => setPulled(json));
+      .then((json) => setPulled(json))
+      .catch(() => {
+        alert(
+          'Could not connect to the servers, however, there is cached data available. These results may be outdated.',
+        );
+      });
   }, [category.id, getListings, deviceName, error]);
 
   //The listFilterHandler is used to filter the order of the product listings.
@@ -122,12 +121,7 @@ function ProductListScreen({route, navigation, Component}) {
                 />
               </View>
               <View style={styles.listItemName}>
-                <Text>
-                  {' '}
-                  {item.type}
-                  {/*{item.product} + {item.ratings} + {item.vendor} + {item.URL} +{' '}
-                  {item.type}*/}
-                </Text>
+                <Text> {item.type}</Text>
               </View>
               <View style={styles.listVendor}>
                 <Text>From: {item.vendor}</Text>
@@ -135,25 +129,6 @@ function ProductListScreen({route, navigation, Component}) {
               <View style={styles.listPrice}>
                 <Text>${item.price}</Text>
               </View>
-              {/*I want to create a heart button that can be pressed to add to favourite
-                            <TouchableHighlight
-                onPress={() => {
-                  alert('heart pressed');
-                }}>
-                <Icon
-                  style={[styles.iconPos]}
-                  name={'heart-outline'}
-                  size={40}
-                  color="#000000"
-                />
-              </TouchableHighlight>*/}
-              {/*              <Button
-                title={'Favorite'}
-                style={[styles.favPos]}
-                onPress={() => {
-                  addFav(AsyncStorage, item).then('Saved');
-                }}
-              />*/}
             </View>
           </TouchableOpacity>
         )}
@@ -202,7 +177,7 @@ function ProductListScreen({route, navigation, Component}) {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //https://medium.com/@jeevium/if-you-are-using-asyncstorage-react-native-api-you-need-these-2-permissions-7960b2e09022
-//Annoyingly, extra permissions are required to store items.
+//This is for the favourites list.
 async function addFav({AsyncStorage}, {item}) {
   const store_key = 2;
   try {
@@ -241,7 +216,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     padding: 10,
     marginVertical: 5,
-    //       backGround: '#ccc',
     borderColor: 'black',
     borderWidth: 1,
     //This is to round out edges of the container.
@@ -285,15 +259,6 @@ const styles = StyleSheet.create({
   modalViewStyle: {
     flex: 0.4,
     justifyContent: 'space-between',
-  },
-  favPos: {
-    //flex: 0.5,
-    //position: 'absolute',
-    //alignSelf: 'flex-end',
-    flexDirection: 'column',
-    justifyContent: 'space-between',
-    height: 10,
-    //left: 0,
   },
 });
 

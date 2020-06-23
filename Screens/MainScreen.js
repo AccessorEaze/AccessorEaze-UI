@@ -23,7 +23,7 @@ import Modal from 'react-native-modal';
 export function MainScreen({navigation}) {
   let PhoneModel = null;
   PhoneModel = getModel();
-  const [phoneDetails, setPhoneDetails] = useState([]);
+  const [phoneDetails, setPhoneDetails] = useState(null);
   const [showRegister, setShowRegister] = useState(false);
   const [showLogin, setShowLogin] = useState(false);
   const [userName, setUserName] = useState('');
@@ -118,7 +118,7 @@ export function MainScreen({navigation}) {
   //https://github.com/saleel/react-native-super-grid
 
   function goto(navigation, item, phoneDetails) {
-    if (phoneDetails.content == undefined) {
+    if (phoneDetails == null) {
       alert('No items available. Please check your internet connection.');
     } else {
       if (item.id == 4) {
@@ -158,7 +158,6 @@ export function MainScreen({navigation}) {
           'Could not find your phone on the servers. Please check your internet connection.',
         );
       });
-    //.then(alert(JSON.stringify(phoneDetails)));
   }, [PhoneModel]);
 
   return (
@@ -177,7 +176,6 @@ export function MainScreen({navigation}) {
           sections={[
             {
               title: <Text>Your phone model is {PhoneModel} </Text>,
-              //data: item,
               data: Objects,
             },
           ]}
@@ -204,7 +202,6 @@ export function MainScreen({navigation}) {
 
         <Modal
           isVisible={showRegister}
-          //remove this so accidental clicks do not close it
           onBackdropPress={() => registerToggle(false)}
           onBackButtonPress={() => registerToggle(false)}
           useNativeDriver={true}>
@@ -254,7 +251,6 @@ export function MainScreen({navigation}) {
 
         <Modal
           isVisible={showLogin}
-          //remove this so accidental clicks do not close it
           onBackdropPress={() => loginToggle(false)}
           onBackButtonPress={() => loginToggle(false)}
           useNativeDriver={true}>

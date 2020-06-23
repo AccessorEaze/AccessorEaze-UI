@@ -1,11 +1,4 @@
 import React from 'react';
-import {View, Text, StyleSheet, Image} from 'react-native';
-
-/*function ListItem({navigation}) {
-    return (
-        <TouchableOpacity onPress={navigation.navigate('Product Details', {})}/>
-    )
-}*/
 
 class Listing {
   constructor(
@@ -42,18 +35,7 @@ class Listing {
       this.vendor = vendor;
     }
     this.ratings = ratings;
+    this.extra = extra;
   }
 }
-/*
-const styles = StyleSheet.create({
-  listItem: {
-    padding: 10,
-    marginVertical: 5,
-    backgroundColor: '#CCC',
-    borderColor: 'black',
-    borderWidth: 1,
-  },
-});
-*/
-
 export default Listing;

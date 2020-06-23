@@ -10,7 +10,7 @@ import {
   ScrollView,
 } from 'react-native';
 
-function ProductDetailsScreen({route, navigation}) {
+function ProductDetailsScreen({route}) {
   const {itemDetails} = route.params;
   return (
     <View style={styles.screen}>
@@ -31,7 +31,6 @@ const styles = StyleSheet.create({
   screen: {
     backgroundColor: '#666666',
     flex: 1,
-    //justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'column',
   },
@@ -43,7 +42,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     //This is to round out edges of the container.
     borderRadius: 5,
-    //resizeMode: 'stretch',
   },
 });
 
